@@ -1,4 +1,4 @@
-import { signal, computed, effect, useRef } from 'what-framework';
+import { signal, computed, effect, useRef, untrack } from 'what-framework';
 
 function AnimatedNumber({ value, label, prefix = '', suffix = '', color = 'var(--primary)' }) {
   const displayed = signal(0);
@@ -6,7 +6,8 @@ function AnimatedNumber({ value, label, prefix = '', suffix = '', color = 'var(-
 
   effect(() => {
     const target = value();
-    const start = displayed();
+    // untrack: read displayed without subscribing — prevents circular re-trigger
+    const start = untrack(() => displayed());
     const startTime = performance.now();
     const duration = 600;
 
@@ -61,7 +62,7 @@ function ActivityFeed() {
     <div class="activity-feed">
       <h3>Recent Activity</h3>
       <ul class="feed-list">
-        {events().map((ev, i) => (
+        {() => events().map((ev, i) => (
           <li class="feed-item" style={`animation-delay: ${i * 60}ms`}>
             <span class="feed-icon">{icons[ev.type]}</span>
             <span class="feed-text">{ev.text}</span>
@@ -69,6 +70,7 @@ function ActivityFeed() {
           </li>
         ))}
       </ul>
+
     </div>
   );
 }

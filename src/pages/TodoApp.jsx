@@ -1,17 +1,15 @@
-import { signal, computed, batch } from 'what-framework';
+import { signal, computed } from 'what-framework';
 
 export function TodoApp() {
-  // State
   const todos = signal([
     { id: 1, text: 'Learn What Framework', done: true },
     { id: 2, text: 'Build something cool', done: false },
     { id: 3, text: 'Deploy to production', done: false },
   ]);
-  const filter = signal('all'); // 'all' | 'active' | 'done'
+  const filter = signal('all');
   const newText = signal('');
   let nextId = 4;
 
-  // Derived state
   const filtered = computed(() => {
     const f = filter();
     const list = todos();
@@ -26,13 +24,13 @@ export function TodoApp() {
     return { total: list.length, done, remaining: list.length - done };
   });
 
-  // Actions
   function addTodo(e) {
     e.preventDefault();
     const text = newText().trim();
     if (!text) return;
     todos([...todos(), { id: nextId++, text, done: false }]);
     newText('');
+    e.target.reset();
   }
 
   function toggleTodo(id) {
@@ -63,30 +61,30 @@ export function TodoApp() {
           <button type="submit" class="btn btn-primary">Add</button>
         </form>
 
-        <div class="filter-bar">
-          <button
-            class={`btn btn-sm ${filter() === 'all' ? 'btn-active' : ''}`}
-            onclick={() => filter('all')}
-          >
-            All
-          </button>
-          <button
-            class={`btn btn-sm ${filter() === 'active' ? 'btn-active' : ''}`}
-            onclick={() => filter('active')}
-          >
-            Active
-          </button>
-          <button
-            class={`btn btn-sm ${filter() === 'done' ? 'btn-active' : ''}`}
-            onclick={() => filter('done')}
-          >
-            Done
-          </button>
-          <span class="muted">{() => `${stats().remaining} remaining`}</span>
-        </div>
+        {() => {
+          const f = filter();
+          const s = stats();
+          return (
+            <div class="filter-bar">
+              <button
+                class={`btn btn-sm ${f === 'all' ? 'btn-active' : ''}`}
+                onclick={() => filter('all')}
+              >All</button>
+              <button
+                class={`btn btn-sm ${f === 'active' ? 'btn-active' : ''}`}
+                onclick={() => filter('active')}
+              >Active</button>
+              <button
+                class={`btn btn-sm ${f === 'done' ? 'btn-active' : ''}`}
+                onclick={() => filter('done')}
+              >Done</button>
+              <span class="muted">{`${s.remaining} remaining`}</span>
+            </div>
+          );
+        }}
 
         <ul class="todo-list">
-          {filtered().map(todo => (
+          {() => filtered().map(todo => (
             <li class={`todo-item ${todo.done ? 'done' : ''}`} key={todo.id}>
               <label class="todo-label">
                 <input
@@ -103,9 +101,9 @@ export function TodoApp() {
           ))}
         </ul>
 
-        {stats().done > 0 ? (
+        {() => stats().done > 0 ? (
           <button class="btn btn-sm" onclick={clearDone}>
-            {() => `Clear ${stats().done} completed`}
+            {`Clear ${stats().done} completed`}
           </button>
         ) : null}
       </div>

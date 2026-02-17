@@ -72,6 +72,7 @@ export function Theme() {
   const current = signal('midnight');
   const palette = computed(() => PALETTES[current()]);
 
+  // Apply CSS variables to root — reactively updates the entire page theme
   effect(() => {
     const p = palette();
     const root = document.documentElement;
@@ -89,37 +90,47 @@ export function Theme() {
       <h1>Theme Switcher</h1>
       <p class="subtitle">Live CSS variable updates via signals — no page reload, no re-render</p>
 
-      <div class="palette-grid">
-        {Object.entries(PALETTES).map(([key, p]) => (
-          <button
-            class={`palette-btn ${current() === key ? 'palette-active' : ''}`}
-            style={`--p-bg: ${p.bg}; --p-primary: ${p.primary}; --p-border: ${p.border}; --p-text: ${p.text}`}
-            onclick={() => current(key)}
-          >
-            <div class="palette-preview">
-              <div class="palette-dot" style={`background: ${p.primary}`} />
-              <div class="palette-dot" style={`background: ${p.accent}`} />
-              <div class="palette-dot" style={`background: ${p.muted}`} />
+      {() => {
+        const key = current();
+        return (
+          <div class="palette-grid">
+            {Object.entries(PALETTES).map(([k, p]) => (
+              <button
+                class={`palette-btn ${key === k ? 'palette-active' : ''}`}
+                style={`--p-bg: ${p.bg}; --p-primary: ${p.primary}; --p-border: ${p.border}; --p-text: ${p.text}`}
+                onclick={() => current(k)}
+              >
+                <div class="palette-preview">
+                  <div class="palette-dot" style={`background: ${p.primary}`} />
+                  <div class="palette-dot" style={`background: ${p.accent}`} />
+                  <div class="palette-dot" style={`background: ${p.muted}`} />
+                </div>
+                <span class="palette-name">{p.label}</span>
+              </button>
+            ))}
+          </div>
+        );
+      }}
+
+      {() => <PreviewCard palette={palette()} />}
+
+      {() => {
+        const p = palette();
+        return (
+          <div class="card">
+            <h2>Active Palette</h2>
+            <div class="swatch-grid">
+              <ColorSwatch color={p.bg} label="Background" />
+              <ColorSwatch color={p.card} label="Card" />
+              <ColorSwatch color={p.border} label="Border" />
+              <ColorSwatch color={p.text} label="Text" />
+              <ColorSwatch color={p.muted} label="Muted" />
+              <ColorSwatch color={p.primary} label="Primary" />
+              <ColorSwatch color={p.accent} label="Accent" />
             </div>
-            <span class="palette-name">{p.label}</span>
-          </button>
-        ))}
-      </div>
-
-      <PreviewCard palette={palette()} />
-
-      <div class="card">
-        <h2>Active Palette</h2>
-        <div class="swatch-grid">
-          <ColorSwatch color={palette().bg} label="Background" />
-          <ColorSwatch color={palette().card} label="Card" />
-          <ColorSwatch color={palette().border} label="Border" />
-          <ColorSwatch color={palette().text} label="Text" />
-          <ColorSwatch color={palette().muted} label="Muted" />
-          <ColorSwatch color={palette().primary} label="Primary" />
-          <ColorSwatch color={palette().accent} label="Accent" />
-        </div>
-      </div>
+          </div>
+        );
+      }}
     </div>
   );
 }

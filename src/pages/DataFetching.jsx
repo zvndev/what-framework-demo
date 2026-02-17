@@ -1,4 +1,4 @@
-import { signal, effect } from 'what-framework';
+import { signal } from 'what-framework';
 
 function UserCard({ user }) {
   return (
@@ -28,7 +28,6 @@ function GithubSearch() {
   const result = signal(null);
   const searching = signal(false);
   const searchError = signal(null);
-
   let debounceTimer;
 
   function search(username) {
@@ -63,9 +62,9 @@ function GithubSearch() {
         placeholder="Search GitHub users..."
         oninput={(e) => { query(e.target.value); search(e.target.value); }}
       />
-      {searching() ? <p class="loading">Searching...</p> : null}
-      {searchError() ? <p class="error">{searchError()}</p> : null}
-      {result() ? <UserCard user={result()} /> : null}
+      {() => searching() ? <p class="loading">Searching...</p> : null}
+      {() => searchError() ? <p class="error">{searchError()}</p> : null}
+      {() => result() ? <UserCard user={result()} /> : null}
     </div>
   );
 }
@@ -75,19 +74,19 @@ function RepoList() {
   const error = signal(null);
   const loading = signal(true);
 
-  // Fetch on mount
+  // Fetch on mount — runs once since component doesn't re-render
   fetch('https://api.github.com/repositories?since=1000&per_page=8')
     .then(r => { if (!r.ok) throw new Error('Failed to fetch'); return r.json(); })
-    .then(result => { data(result); loading(false); })
+    .then(repos => { data(repos); loading(false); })
     .catch(err => { error(err.message); loading(false); });
 
   return (
     <div class="card">
       <h2>Public Repos (auto-fetch)</h2>
       <p>Data loaded on mount with signals for loading/error/data states.</p>
-      {loading() ? <p class="loading">Loading repos...</p> : null}
-      {error() ? <p class="error">{error()}</p> : null}
-      {data() ? (
+      {() => loading() ? <p class="loading">Loading repos...</p> : null}
+      {() => error() ? <p class="error">{error()}</p> : null}
+      {() => data() ? (
         <ul class="repo-list">
           {data().slice(0, 8).map(repo => (
             <li class="repo-item" key={repo.id}>

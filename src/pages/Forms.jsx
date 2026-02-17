@@ -1,7 +1,6 @@
 import { signal, computed } from 'what-framework';
 
 export function Forms() {
-  // --- Controlled form ---
   const name = signal('');
   const email = signal('');
   const role = signal('developer');
@@ -30,9 +29,10 @@ export function Forms() {
     email('');
     role('developer');
     agree(false);
+    e.target.reset();
   }
 
-  // --- Dynamic fields demo ---
+  // Dynamic fields demo
   const fields = signal([{ id: 1, value: '' }]);
   let fieldId = 2;
 
@@ -67,7 +67,7 @@ export function Forms() {
               placeholder="Your name"
               oninput={(e) => name(e.target.value)}
             />
-            {errors().name ? <span class="field-error">{errors().name}</span> : null}
+            {() => errors().name ? <span class="field-error">{errors().name}</span> : null}
           </div>
 
           <div class="form-group">
@@ -78,7 +78,7 @@ export function Forms() {
               placeholder="you@example.com"
               oninput={(e) => email(e.target.value)}
             />
-            {errors().email ? <span class="field-error">{errors().email}</span> : null}
+            {() => errors().email ? <span class="field-error">{errors().email}</span> : null}
           </div>
 
           <div class="form-group">
@@ -99,19 +99,21 @@ export function Forms() {
               />
               I agree to the terms
             </label>
-            {errors().agree ? <span class="field-error">{errors().agree}</span> : null}
+            {() => errors().agree ? <span class="field-error">{errors().agree}</span> : null}
           </div>
 
-          <button
-            type="submit"
-            class="btn btn-primary"
-            disabled={!isValid()}
-          >
-            Submit
-          </button>
+          {() => (
+            <button
+              type="submit"
+              class="btn btn-primary"
+              disabled={!isValid()}
+            >
+              Submit
+            </button>
+          )}
         </form>
 
-        {submitted() ? (
+        {() => submitted() ? (
           <div class="success-message">
             {`Submitted: ${JSON.stringify(submitted())}`}
           </div>
@@ -123,7 +125,7 @@ export function Forms() {
         <p>Add and remove form fields dynamically. Each field is tracked by signal.</p>
 
         <div class="dynamic-fields">
-          {fields().map(field => (
+          {() => fields().map(field => (
             <div class="field-row" key={field.id}>
               <input
                 type="text"
