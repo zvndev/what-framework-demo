@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "what-framework": "^0.4.0"
+    "what-framework": "^0.5.1"
   },
   "devDependencies": {
     "vite": "^6.0.0"

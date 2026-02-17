@@ -1,6 +1,6 @@
 # What Framework Demo
 
-A standalone demo app showcasing [What Framework](https://github.com/aspect/what-fw) — the closest framework to vanilla JS.
+A standalone demo app showcasing [What Framework](https://github.com/zvndev/what-fw) — the closest framework to vanilla JS.
 
 ## Features Demonstrated
 
@@ -10,6 +10,8 @@ A standalone demo app showcasing [What Framework](https://github.com/aspect/what
 - **Data Fetching** — Async data with signals, loading/error states, debounced GitHub search
 - **Animations** — Spring physics, tweens with easing, CSS staggered transitions
 - **Forms** — Controlled inputs, real-time validation with computed, dynamic fields
+- **Dashboard** — Animated number counters, mini bar charts, activity feed
+- **Theme** — Live palette switching via CSS custom properties driven by signals
 
 ## Quick Start
 
@@ -22,7 +24,7 @@ Open http://localhost:5173
 
 ## Stack
 
-- **What Framework** — Signals, components, fine-grained reactivity
+- **What Framework 0.5.1** — Signals, components, fine-grained reactivity
 - **Vite** — Dev server and build tool
 - **JSX** — Classic transform with `h()` / `Fragment`
 

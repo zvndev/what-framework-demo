@@ -49,6 +49,14 @@ export function Home() {
           <h3>Forms</h3>
           <p>Form state, validation, controlled inputs</p>
         </Link>
+        <Link href="/dashboard" class="feature-card">
+          <h3>Dashboard</h3>
+          <p>Animated counters, live stats, mini charts</p>
+        </Link>
+        <Link href="/theme" class="feature-card">
+          <h3>Theme</h3>
+          <p>Live palette switching via CSS variables</p>
+        </Link>
       </div>
     </div>
   );
