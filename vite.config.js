@@ -1,9 +1,6 @@
 import { defineConfig } from 'vite';
+import what from 'what-compiler/vite';
 
 export default defineConfig({
-  esbuild: {
-    jsxFactory: 'h',
-    jsxFragment: 'Fragment',
-    jsxInject: `import { h, Fragment } from 'what-framework'`,
-  },
+  plugins: [what()],
 });

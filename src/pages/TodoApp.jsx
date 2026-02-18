@@ -61,30 +61,30 @@ export function TodoApp() {
           <button type="submit" class="btn btn-primary">Add</button>
         </form>
 
-        {() => {
-          const f = filter();
-          const s = stats();
-          return (
-            <div class="filter-bar">
-              <button
-                class={`btn btn-sm ${f === 'all' ? 'btn-active' : ''}`}
-                onclick={() => filter('all')}
-              >All</button>
-              <button
-                class={`btn btn-sm ${f === 'active' ? 'btn-active' : ''}`}
-                onclick={() => filter('active')}
-              >Active</button>
-              <button
-                class={`btn btn-sm ${f === 'done' ? 'btn-active' : ''}`}
-                onclick={() => filter('done')}
-              >Done</button>
-              <span class="muted">{`${s.remaining} remaining`}</span>
-            </div>
-          );
-        }}
+        <div class="filter-bar">
+          <button
+            class={`btn btn-sm ${filter() === 'all' ? 'btn-active' : ''}`}
+            onclick={() => filter('all')}
+          >
+            All
+          </button>
+          <button
+            class={`btn btn-sm ${filter() === 'active' ? 'btn-active' : ''}`}
+            onclick={() => filter('active')}
+          >
+            Active
+          </button>
+          <button
+            class={`btn btn-sm ${filter() === 'done' ? 'btn-active' : ''}`}
+            onclick={() => filter('done')}
+          >
+            Done
+          </button>
+          <span class="muted">{`${stats().remaining} remaining`}</span>
+        </div>
 
         <ul class="todo-list">
-          {() => filtered().map(todo => (
+          {filtered().map(todo => (
             <li class={`todo-item ${todo.done ? 'done' : ''}`} key={todo.id}>
               <label class="todo-label">
                 <input
@@ -101,7 +101,7 @@ export function TodoApp() {
           ))}
         </ul>
 
-        {() => stats().done > 0 ? (
+        {stats().done > 0 ? (
           <button class="btn btn-sm" onclick={clearDone}>
             {`Clear ${stats().done} completed`}
           </button>

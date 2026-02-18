@@ -22,10 +22,10 @@ export function Home() {
         <p>This counter demonstrates the basics: <code>signal()</code> and <code>computed()</code>.</p>
         <div class="counter-demo">
           <button class="btn" onclick={() => count(count() - 1)}>-</button>
-          <span class="count">{() => count()}</span>
+          <span class="count">{count()}</span>
           <button class="btn" onclick={() => count(count() + 1)}>+</button>
         </div>
-        <p class="muted">{() => `Doubled: ${doubled()}`}</p>
+        <p class="muted">{`Doubled: ${doubled()}`}</p>
       </div>
 
       <div class="feature-grid">

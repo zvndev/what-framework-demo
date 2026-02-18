@@ -109,9 +109,9 @@ function ProgressDemo() {
       <div class="progress-bar-outer">
         <div class="progress-bar-inner" ref={barRef} />
       </div>
-      <p class="muted">{() => `${Math.round(progress())}%`}</p>
+      <p class="muted">{`${Math.round(progress())}%`}</p>
       <button class="btn btn-primary" onclick={start}>
-        {() => animating() ? 'Animating...' : 'Start'}
+        {animating() ? 'Animating...' : 'Start'}
       </button>
     </div>
   );
@@ -136,7 +136,7 @@ function StaggerDemo() {
       <h2>Staggered Entry</h2>
       <p>CSS transitions triggered by signal state change.</p>
       <button class="btn btn-primary" onclick={() => visible(!visible())}>
-        {() => visible() ? 'Hide' : 'Show'}
+        {visible() ? 'Hide' : 'Show'}
       </button>
       <div class="stagger-list" ref={listRef}>
         {['Signals', 'Components', 'Effects', 'Routing', 'Stores'].map((item, i) => (

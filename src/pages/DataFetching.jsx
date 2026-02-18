@@ -62,9 +62,9 @@ function GithubSearch() {
         placeholder="Search GitHub users..."
         oninput={(e) => { query(e.target.value); search(e.target.value); }}
       />
-      {() => searching() ? <p class="loading">Searching...</p> : null}
-      {() => searchError() ? <p class="error">{searchError()}</p> : null}
-      {() => result() ? <UserCard user={result()} /> : null}
+      {searching() ? <p class="loading">Searching...</p> : null}
+      {searchError() ? <p class="error">{searchError()}</p> : null}
+      {result() ? <UserCard user={result()} /> : null}
     </div>
   );
 }
@@ -84,9 +84,9 @@ function RepoList() {
     <div class="card">
       <h2>Public Repos (auto-fetch)</h2>
       <p>Data loaded on mount with signals for loading/error/data states.</p>
-      {() => loading() ? <p class="loading">Loading repos...</p> : null}
-      {() => error() ? <p class="error">{error()}</p> : null}
-      {() => data() ? (
+      {loading() ? <p class="loading">Loading repos...</p> : null}
+      {error() ? <p class="error">{error()}</p> : null}
+      {data() ? (
         <ul class="repo-list">
           {data().slice(0, 8).map(repo => (
             <li class="repo-item" key={repo.id}>

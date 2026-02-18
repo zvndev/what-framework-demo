@@ -72,13 +72,13 @@ export function Reactivity() {
           oninput={(e) => name(e.target.value)}
           placeholder="Enter your name"
         />
-        <p class="result">{() => greeting()}</p>
+        <p class="result">{greeting()}</p>
       </div>
 
       <div class="card">
         <h2>Effects</h2>
         <p>Effects auto-track signal dependencies. No dependency arrays needed.</p>
-        <pre class="log">{() => logText() || '(type above to see effect log)'}</pre>
+        <pre class="log">{logText() || '(type above to see effect log)'}</pre>
       </div>
 
       <div class="card">
@@ -87,9 +87,9 @@ export function Reactivity() {
           Without <code>batch()</code>, each signal write triggers a separate update.
           With batch, multiple writes collapse into one.
         </p>
-        <p>{() => `Position: ${position()}`}</p>
+        <p>{`Position: ${position()}`}</p>
         <p class="muted">
-          {() => `Without batch: ${noBatchCount()} effect runs | With batch: ${batchCount()} effect runs`}
+          {`Without batch: ${noBatchCount()} effect runs | With batch: ${batchCount()} effect runs`}
         </p>
         <div class="btn-group">
           <button class="btn" onclick={moveWithoutBatch}>Move +1,+1 (no batch)</button>
@@ -102,10 +102,10 @@ export function Reactivity() {
         <p>
           <code>useRef</code> persists the interval ID. <code>signal</code> drives the display.
         </p>
-        <p class="timer">{() => (elapsed() / 10).toFixed(1)}s</p>
+        <p class="timer">{(elapsed() / 10).toFixed(1)}s</p>
         <div class="btn-group">
           <button class="btn btn-primary" onclick={toggleTimer}>
-            {() => running() ? 'Stop' : 'Start'}
+            {running() ? 'Stop' : 'Start'}
           </button>
           <button class="btn" onclick={() => { elapsed(0); }}>Reset</button>
         </div>
